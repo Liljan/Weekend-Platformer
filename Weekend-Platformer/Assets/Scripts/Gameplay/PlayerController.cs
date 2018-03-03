@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Delegates
+    public event Action<Transform, float> PlatformDelegate;
+
     private Rigidbody2D rb2d;
     private Animator animator;
 
@@ -101,5 +105,15 @@ public class PlayerController : MonoBehaviour
     {
         Movement();
         Jumping();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Platform" )
+        {
+            Transform trans = collision.gameObject.transform;
+            float offset = 0.5f * collision.collider.bounds.size.y;
+            PlatformDelegate.Invoke(collision.gameObject.transform, offset);
+        }
     }
 }

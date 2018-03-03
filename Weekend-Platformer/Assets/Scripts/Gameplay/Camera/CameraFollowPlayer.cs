@@ -5,29 +5,54 @@ using UnityEngine;
 public class CameraFollowPlayer : MonoBehaviour {
 
     private Camera camera;
-    public Transform target;
+    public Transform player;
+    private Transform yTransform;
+
+    public float smoothness;
+    private float offset;
 
     private void Awake()
     {
         camera = GetComponent<Camera>();
+        FindObjectOfType<PlayerController>().PlatformDelegate += SetTarget;
     }
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+    {
+        float x, y, z;
         //Vector3 = camera.scree
+        if(!yTransform)
+        {
+            x = player.position.x;
+            y = player.position.y;
+        }
+        else
+        {
+            x = player.position.x;
+            y = yTransform.position.y + offset;
+        }
 
-        float x = target.position.x;
-        float y = transform.position.y;
-        float z = transform.position.z;
+        z = transform.position.z;
 
+        Vector2 lerp = Vector2.MoveTowards(transform.position, new Vector2(x, y), smoothness * Time.deltaTime);
 
+        float finalX = x;
+        float finalY = lerp.y;
+        float finalZ = z;
 
-        transform.position = new Vector3(x,y,z);
+        transform.position = new Vector3(finalX,finalY,finalZ);
 	}
+
+    public void SetTarget(Transform t, float o)
+    {
+        yTransform = t;
+        offset = o;
+    }
 }
