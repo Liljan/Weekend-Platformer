@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class PlayerBulletPool : MonoBehaviour {
-
+public class PlayerBulletPool : MonoBehaviour
+{
+    private static PlayerBulletPool instance;
     public string name;
     public GameObject Prefab;
 
@@ -12,12 +14,18 @@ public class PlayerBulletPool : MonoBehaviour {
 
     private void Awake()
     {
+        instance = this;
         FindObjectOfType<PlayerWeapon>().FireDelegate += SpawnBullet;
     }
 
-    // Use this for initialization
-    void Start () {
+    public static PlayerBulletPool Instance()
+    {
+        return instance;
+    }
 
+    // Use this for initialization
+    void Start()
+    {
         instances = new List<GameObject>();
         instances.Capacity = startSize;
 
@@ -28,15 +36,15 @@ public class PlayerBulletPool : MonoBehaviour {
 
             instances.Add(instance);
         }
+    }
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Update is called once per frame
+    void Update()
+    {
 
-    private void SpawnBullet(Transform t)
+    }
+
+    private void SpawnBullet(Vector3 pos, Quaternion rot)
     {
         for (int i = 0; i < instances.Capacity; i++)
         {
@@ -44,10 +52,24 @@ public class PlayerBulletPool : MonoBehaviour {
             if (!instance.activeSelf)
             {
                 instance.SetActive(true);
-                instance.transform.position = t.position;
-                instance.transform.rotation = t.rotation;
+                instance.transform.position = pos;
+                instance.transform.rotation = rot;
                 return;
             }
         }
     }
+
+    public void DespawnBullet(GameObject g)
+    {
+        for (int i = 0; i < instances.Capacity; i++)
+        {
+            GameObject instance = instances[i];
+            if (instance == g)
+            {
+                instance.SetActive(false);
+                return;
+            }
+        }
+    }
+
 }
