@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        PlayerBulletPool.Instance().DespawnBullet(gameObject);
+        PlayerEvents.Instance().InvokeDespawnShot(gameObject);
     }
 
     private void OnBecameVisible()

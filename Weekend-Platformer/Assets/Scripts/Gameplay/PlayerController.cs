@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Delegates
-    public event Action<Transform, float> PlatformDelegate;
-
     private Rigidbody2D rb2d;
     private Animator animator;
 
@@ -113,7 +110,7 @@ public class PlayerController : MonoBehaviour
         {
             Transform trans = collision.gameObject.transform;
             float offset = 0.5f * collision.collider.bounds.size.y;
-            PlatformDelegate.Invoke(collision.gameObject.transform, offset);
+            PlayerEvents.Instance().InvokeTouchPlatform(trans, offset);
         }
     }
 }

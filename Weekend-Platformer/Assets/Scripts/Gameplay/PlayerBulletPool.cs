@@ -14,8 +14,7 @@ public class PlayerBulletPool : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
-        FindObjectOfType<PlayerWeapon>().FireDelegate += SpawnBullet;
+        instance = this;   
     }
 
     public static PlayerBulletPool Instance()
@@ -26,6 +25,9 @@ public class PlayerBulletPool : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PlayerEvents.Instance().SpawnShot += SpawnBullet;
+        PlayerEvents.Instance().DespawnShot += DespawnBullet;
+
         instances = new List<GameObject>();
         instances.Capacity = startSize;
 

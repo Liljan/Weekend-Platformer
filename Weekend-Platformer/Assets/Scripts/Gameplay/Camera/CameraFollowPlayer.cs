@@ -14,14 +14,13 @@ public class CameraFollowPlayer : MonoBehaviour {
     private void Awake()
     {
         camera = GetComponent<Camera>();
-        FindObjectOfType<PlayerController>().PlatformDelegate += SetTarget;
     }
 
     // Use this for initialization
     void Start ()
     {
-		
-	}
+        PlayerEvents.Instance().TouchPlatform += SetTarget;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -47,7 +46,7 @@ public class CameraFollowPlayer : MonoBehaviour {
         float finalY = lerp.y;
         float finalZ = z;
 
-        transform.position = new Vector3(finalX,finalY,finalZ);
+        camera.transform.position = new Vector3(finalX,finalY,finalZ);
 	}
 
     public void SetTarget(Transform t, float o)

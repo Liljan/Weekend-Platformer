@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    public event Action<Vector3, Quaternion> FireDelegate;
-
     public Transform shootPoint;
     private Animator animator;
 
@@ -32,7 +30,7 @@ public class PlayerWeapon : MonoBehaviour
             Vector3 pos = shootPoint.position;
             Quaternion rot = shootPoint.rotation * Quaternion.Euler(0F, 0F, transform.localScale.x < 0F ? 180F : 0F);
 
-            FireDelegate.Invoke(pos,rot);
+            PlayerEvents.Instance().InvokeSpawnShot(pos, rot);
         }
         else
         {
