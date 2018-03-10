@@ -5,6 +5,12 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     private bool isTriggered;
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     // Use this for initialization
     void Start()
@@ -27,6 +33,7 @@ public class CheckPoint : MonoBehaviour
         {
             LevelEvents.Instance().InvokeSetCheckpoint(transform);
             isTriggered = true;
+            animator.SetTrigger("Triggered");
         }
     }
 }
