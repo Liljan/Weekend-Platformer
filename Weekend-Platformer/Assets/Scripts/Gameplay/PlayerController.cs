@@ -113,4 +113,9 @@ public class PlayerController : MonoBehaviour
             PlayerEvents.Instance().InvokeTouchPlatform(trans, offset);
         }
     }
+
+    private void OnBecameInvisible()
+    {
+        PlayerEvents.Instance().InvokeDeath();
+    }
 }

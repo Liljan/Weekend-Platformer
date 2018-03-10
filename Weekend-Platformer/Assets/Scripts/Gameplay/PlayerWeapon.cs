@@ -10,7 +10,7 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Awake()
     {
-        shootPoint = transform.FindChild("ShootPoint");
+        shootPoint = transform.Find("ShootPoint");
         animator = GetComponent<Animator>();
     }
 

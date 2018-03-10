@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraFollowPlayer : MonoBehaviour {
 
+    private Transform target;
     private Camera camera;
-    public Transform player;
     private Transform yTransform;
 
     public float smoothness;
@@ -14,31 +14,33 @@ public class CameraFollowPlayer : MonoBehaviour {
     private void Awake()
     {
         camera = GetComponent<Camera>();
+
+        PlayerEvents.Instance().SpawnPlayer += SetTarget;
+        PlayerEvents.Instance().TouchPlatform += SetHeight;
     }
 
     // Use this for initialization
     void Start ()
     {
-        PlayerEvents.Instance().TouchPlatform += SetTarget;
+
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (!target)
+            return;
+
         float x, y, z;
-        //Vector3 = camera.scree
-        if(!yTransform)
+
+        x = target.position.x;
+        y = target.position.y;
+        z = transform.position.z;
+
+        if (yTransform)
         {
-            x = player.position.x;
-            y = player.position.y;
-        }
-        else
-        {
-            x = player.position.x;
             y = yTransform.position.y + offset;
         }
-
-        z = transform.position.z;
 
         Vector2 lerp = Vector2.MoveTowards(transform.position, new Vector2(x, y), smoothness * Time.deltaTime);
 
@@ -46,10 +48,15 @@ public class CameraFollowPlayer : MonoBehaviour {
         float finalY = lerp.y;
         float finalZ = z;
 
-        camera.transform.position = new Vector3(finalX,finalY,finalZ);
+        camera.transform.position = new Vector3(finalX, finalY, finalZ);
 	}
 
-    public void SetTarget(Transform t, float o)
+    public void SetTarget(Transform t)
+    {
+        target = t;
+    }
+
+    public void SetHeight(Transform t, float o)
     {
         yTransform = t;
         offset = o;
