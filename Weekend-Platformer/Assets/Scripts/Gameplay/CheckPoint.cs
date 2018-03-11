@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckPoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
     private bool isTriggered;
     private Animator animator;
@@ -16,12 +16,6 @@ public class CheckPoint : MonoBehaviour
     void Start()
     {
         isTriggered = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

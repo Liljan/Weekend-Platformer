@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
         // Register listeners
         PlayerEvents.Instance().DespawnPlayer += SpawnPlayer;
         LevelEvents.Instance().SetCheckpoint += SetCheckpoint;
+        LevelEvents.Instance().ReachGoal += WinLevel;
 
         // Level Manager logic
         currentCheckpoint = startPoint;
@@ -42,4 +43,15 @@ public class LevelManager : MonoBehaviour
     {
 		
 	}
+
+    private void WinLevel()
+    {
+        StartCoroutine(Win());
+    }
+
+    private IEnumerator Win()
+    {
+        Debug.Log("Level won!");
+        yield return new WaitForSeconds(2.0f);
+    }
 }
