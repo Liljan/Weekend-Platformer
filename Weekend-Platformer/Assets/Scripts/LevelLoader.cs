@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class LevelLoader : MonoBehaviour {
 
     public string sceneName = "Dev_Gameplay_Scene";
-    public Slider slider;
-    public Text text;
+    public FillBar fillBar;
 
-    public Animator sliderAnimator;
+    public Text text;
+    public Animator textAnimator;
 
     private void Start()
     {
@@ -27,18 +27,20 @@ public class LevelLoader : MonoBehaviour {
         operation.allowSceneActivation = false;
 
         bool isLoaded = false;
+        text.text = "Loading...";
 
-        while(!operation.isDone)
+        while (!operation.isDone)
         {
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            slider.value = progress;
+            fillBar.SetFill(progress);
 
-            if(operation.progress >= 0.9f)
+            if (operation.progress >= 0.9f)
             {
                 if(!isLoaded)
                 {
                     // set Text
-                    sliderAnimator.SetTrigger("Done");
+                    text.text = "Push <Enter> to start, sucka!";
+                    textAnimator.SetTrigger("IsDone");
                     isLoaded = true;
                 }
 
