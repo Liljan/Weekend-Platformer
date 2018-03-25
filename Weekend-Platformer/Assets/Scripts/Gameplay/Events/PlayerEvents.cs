@@ -11,7 +11,8 @@ public class PlayerEvents : MonoBehaviour
 
     public event Action<Transform, float> TouchPlatform;
     
-    public event Action<int> TakeDamage;
+    public event Action<int, int> UpdateHealth;
+    public event Action<int> UpdateLives;
 
     public event Action<Vector3, Quaternion> SpawnShot;
     public event Action<GameObject> DespawnShot;
@@ -41,9 +42,9 @@ public class PlayerEvents : MonoBehaviour
         DespawnPlayer.Invoke();
     }
 
-    public void InvokeTakeDamage(int i)
+    public void InvokeUpdateHealth(int i, int max)
     {
-        TakeDamage.Invoke(i);
+        UpdateHealth.Invoke(i,max);
     }
 
     public void InvokeSpawnShot(Vector3 pos, Quaternion rot)
@@ -55,5 +56,4 @@ public class PlayerEvents : MonoBehaviour
     {
         DespawnShot.Invoke(g);
     }
-
 }

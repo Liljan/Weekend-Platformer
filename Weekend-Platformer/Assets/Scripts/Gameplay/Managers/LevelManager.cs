@@ -37,12 +37,6 @@ public class LevelManager : MonoBehaviour
     {
         currentCheckpoint = t;
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 
     private void WinLevel()
     {
